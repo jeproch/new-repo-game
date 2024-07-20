@@ -9,7 +9,7 @@ SDL_Rect player = { 220, 560, 50, 50 };
 SDL_Rect ground = { 0, 610, 1366, 90 };
 SDL_Rect healthBar = { 10, 10, 1000, 70 }; // the 1000 is the hp
 
-bool showInventory = false;
+// bool showInventory = false;s
 
 void loadMedia() {
     // Load background image (replace with your actual image path)
@@ -48,6 +48,7 @@ void handleEvents() {
             // } else {
             //     showInventory = false;
             // }
+            openInventory();
         } 
     }
 }

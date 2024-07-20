@@ -20,7 +20,7 @@ void loadMedia();
 void move();
 void handleEvents();
 void render();
-bool listenInventory();
+// bool listenInventory();
 void openInventory();
 void keepPlayerOnWindow();
 
