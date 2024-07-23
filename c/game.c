@@ -40,7 +40,8 @@ void handleEvents() {
     if (event.type == SDL_QUIT) {
       quit = 1;
     } else if (event.type == SDL_KEYDOWN) {
-      move(); // Add your own move function call here
+      move();          // Add your own move function call here
+      openInventory(); // why does this not execute?
     }
   }
 }
@@ -68,11 +69,9 @@ void render() {
   SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255); // Set color to green
   SDL_RenderFillRect(renderer, &ground);            // Draw the ground
 
-  // Render the inventory
-  openInventory();
   // Update screen
   SDL_RenderPresent(renderer);
 
   // Add a small delay to reduce CPU usage
-  SDL_Delay(10);
+  SDL_Delay(1000);
 }
