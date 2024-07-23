@@ -1,4 +1,5 @@
 #include "game.h"
+#include <SDL2/SDL_events.h>
 #include <stdio.h>
 #include <stdbool.h>
 #include <SDL2/SDL.h>
@@ -7,9 +8,7 @@
 SDL_Texture* backgroundTexture = NULL;
 SDL_Rect player = { 220, 560, 50, 50 };
 SDL_Rect ground = { 0, 610, 1366, 90 };
-SDL_Rect healthBar = { 10, 10, 1000, 70 }; // the 1000 is the hp
-
-// bool showInventory = false;s
+SDL_Rect healthBar = { 10, 10, 1000, 70 };
 
 void loadMedia() {
     // Load background image (replace with your actual image path)
@@ -35,51 +34,46 @@ void keepPlayerOnWindow() {
     }
 }
 
-
-
 void handleEvents() {
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT) {
             quit = 1;
         } else if (event.type == SDL_KEYDOWN) {
             move(); // Add your own move function call here
-            // if(listenInventory) {
-            //     showInventory = true;
-            // } else {
-            //     showInventory = false;
-            // }
-            openInventory();
-        } 
+        }
     }
 }
 
 void render() {
-    while (!quit) {
-        
+    // Handle events (user input, window events, etc.)
+    handleEvents();
     
-        // Render background
-        SDL_RenderCopy(renderer, backgroundTexture, NULL, NULL);
-        
-        handleEvents();
+    // Update game state (positions, game logic, etc.)
+    keepPlayerOnWindow(); // Adjust player position to stay within window bounds
 
-        // if (showInventory = true) {
-        //     showInventory();
-        // }
-        
-        // Render other elements
-        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Set color to red
-        SDL_RenderFillRect(renderer, &player); // Draw the player
+    // Clear the screen
+    SDL_RenderClear(renderer);
 
-        SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255); // Set color to green
-        SDL_RenderFillRect(renderer, &healthBar); // Draw the health bar
+    // Render background
+    SDL_RenderCopy(renderer, backgroundTexture, NULL, NULL);
+    
+    // Render other elements
+    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Set color to red
+    SDL_RenderFillRect(renderer, &player); // Draw the player
 
-        SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255); // Set color to green
-        SDL_RenderFillRect(renderer, &ground); // Draw the ground
+    SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255); // Set color to green
+    SDL_RenderFillRect(renderer, &healthBar); // Draw the health bar
 
-        // Update screen
-        SDL_RenderPresent(renderer);
+    SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255); // Set color to green
+    SDL_RenderFillRect(renderer, &ground); // Draw the ground
+    
+    // Render the inventory
+    openInventory();
+    // Update screen
+    SDL_RenderPresent(renderer);
 
-        // Add a small delay to reduce CPU usage
-        SDL_Delay(10);
-    }
+    // Add a small delay to reduce CPU usage
+    SDL_Delay(10);
 }
+
+

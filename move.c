@@ -6,7 +6,7 @@
 void move() {
     if (event.key.keysym.sym == SDLK_DOWN) {
         if (player.y < ground.y - player.h) {
-            player.y += player.h;
+        player.y += player.h;
         }
     } else if (event.key.keysym.sym == SDLK_UP) {
         if (player.y > 0 ) {
