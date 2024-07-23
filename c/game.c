@@ -12,7 +12,7 @@ SDL_Rect healthBar = { 10, 10, 1000, 70 };
 
 void loadMedia() {
     // Load background image (replace with your actual image path)
-    SDL_Surface* loadedSurface = IMG_Load("assets/Unsaved Image 2.jpg");
+    SDL_Surface* loadedSurface = IMG_Load("../assets/Unsaved Image 2.jpg");
     if (loadedSurface == NULL) {
         printf("Failed to load background image! SDL_image Error: %s\n", IMG_GetError());
         return;
