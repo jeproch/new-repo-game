@@ -2,6 +2,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_keycode.h>
 #include <stdbool.h>
 #include <stdio.h>
 
@@ -40,15 +41,13 @@ void handleEvents() {
     if (event.type == SDL_QUIT) {
       quit = 1;
     } else if (event.type == SDL_KEYDOWN) {
-      move();          // Add your own move function call here
-      openInventory(); // why does this not execute?
+      move(); // Add move function call here
     }
   }
+  openInventory();
 }
 
 void render() {
-  // Handle events (user input, window events, etc.)
-  handleEvents();
 
   // Update game state (positions, game logic, etc.)
   keepPlayerOnWindow(); // Adjust player position to stay within window bounds
@@ -58,6 +57,10 @@ void render() {
 
   // Render background
   SDL_RenderCopy(renderer, backgroundTexture, NULL, NULL);
+
+  // Handle events (user input, window events, etc.)
+
+  handleEvents();
 
   // Render other elements
   SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Set color to red
@@ -73,5 +76,5 @@ void render() {
   SDL_RenderPresent(renderer);
 
   // Add a small delay to reduce CPU usage
-  SDL_Delay(1000);
+  SDL_Delay(10);
 }
