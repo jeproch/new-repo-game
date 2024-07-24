@@ -43,8 +43,10 @@ void handleEvents() {
     } else if (event.type == SDL_KEYDOWN) {
       move(); // Add move function call here
     }
+    if (quit == 0) {
+      openInventory();
+    }
   }
-  openInventory();
 }
 
 void render() {
