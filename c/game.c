@@ -2,7 +2,6 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_image.h>
-#include <SDL2/SDL_keycode.h>
 #include <stdbool.h>
 #include <stdio.h>
 
@@ -23,34 +22,20 @@ void loadMedia() {
   SDL_FreeSurface(loadedSurface);
 }
 
-void keepPlayerOnWindow() {
-  // Keep the player on the map by adjusting its coordinates to stay in view
-  if (player.y > ground.y - player.h) {
-    player.y = ground.y - player.h;
-  } else if (player.y < 0) {
-    player.y = player.h;
-  } else if (player.x < 0) {
-    player.x = player.w;
-  } else if (player.x > 1366 - player.w) {
-    player.x = 1366 - player.w;
-  }
-}
-
 void handleEvents() {
   while (SDL_PollEvent(&event)) {
     if (event.type == SDL_QUIT) {
       quit = 1;
     } else if (event.type == SDL_KEYDOWN) {
-      move(); // Add move function call here
+      if (!bShowInventory) {
+        move(); // Add move function call here only if inventory is not shown
+      }
     }
-    if (quit == 0) {
-      openInventory();
-    }
+    toggleInventory(); //  Check for inventory toggle
   }
 }
 
 void render() {
-
   // Update game state (positions, game logic, etc.)
   keepPlayerOnWindow(); // Adjust player position to stay within window bounds
 
@@ -59,10 +44,6 @@ void render() {
 
   // Render background
   SDL_RenderCopy(renderer, backgroundTexture, NULL, NULL);
-
-  // Handle events (user input, window events, etc.)
-
-  handleEvents();
 
   // Render other elements
   SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Set color to red
@@ -73,6 +54,15 @@ void render() {
 
   SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255); // Set color to green
   SDL_RenderFillRect(renderer, &ground);            // Draw the ground
+
+  // keep this here so that it's rendered semi correctly
+
+  if (bShowInventory) {
+    SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255); // Blue inventory
+    SDL_RenderFillRect(renderer, &Inventory);         // render
+  }
+
+  handleEvents();
 
   // Update screen
   SDL_RenderPresent(renderer);

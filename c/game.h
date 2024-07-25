@@ -12,13 +12,14 @@ extern SDL_Rect healthBar;
 extern SDL_Rect ground;
 extern SDL_Rect Inventory;
 extern int quit;
+extern bool bShowInventory;
 extern SDL_Texture *backgroundTexture;
 
 void loadMedia();
 void move();
 void handleEvents();
 void render();
-void openInventory();
+void toggleInventory();
 void keepPlayerOnWindow();
 
 #endif
