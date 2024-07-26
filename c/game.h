@@ -1,9 +1,11 @@
 #ifndef GAME_H
 #define GAME_H
 
+// LIBRARIES SDL
 #include <SDL2/SDL.h>
 #include <stdbool.h>
 
+// VARIABLES
 extern SDL_Window *window;
 extern SDL_Renderer *renderer;
 extern SDL_Event event;
@@ -15,6 +17,7 @@ extern int quit;
 extern bool bShowInventory;
 extern SDL_Texture *backgroundTexture;
 
+// FUNCTIONS
 void loadMedia();
 void move();
 void handleEvents();

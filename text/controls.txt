@@ -1,0 +1,6 @@
+f2 to open "inventory"
+f3 to close inventory because same key fucks it up
+
+f1 to close the window/game
+
+arrow keys for movement
