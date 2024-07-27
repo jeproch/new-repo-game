@@ -26,6 +26,7 @@ void handleEvents() {
     } else if (event.type == SDL_KEYDOWN) {
       if (!bShowInventory) {
         move(); // Add move function call here only if inventory is not shown
+        spawnRectangle();
       }
     }
     toggleInventory(); //  Check for inventory toggle

@@ -3,6 +3,8 @@
 
 // LIBRARIES SDL
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_rect.h>
 #include <stdbool.h>
 
 // VARIABLES
@@ -13,9 +15,12 @@ extern SDL_Rect player;
 extern SDL_Rect healthBar;
 extern SDL_Rect ground;
 extern SDL_Rect Inventory;
-extern int quit;
-extern bool bShowInventory;
+extern SDL_Rect newRectangle; // the food or just enemies {Items??}
 extern SDL_Texture *backgroundTexture;
+extern int quit;
+extern int randomInt;
+extern int N;
+extern bool bShowInventory;
 
 // FUNCTIONS
 void loadMedia();
@@ -24,5 +29,7 @@ void handleEvents();
 void render();
 void toggleInventory();
 void keepPlayerOnWindow();
+void spawnRectangle();
+int initializeSDL();
 
 #endif
