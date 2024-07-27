@@ -8,8 +8,6 @@ SDL_Renderer *renderer = NULL;
 SDL_Event event; // Define event here
 int quit = 0;
 
-
-
 void destroySDL() {
   // Cleanup
   SDL_DestroyTexture(backgroundTexture);
