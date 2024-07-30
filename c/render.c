@@ -12,8 +12,7 @@ void render() {
   SDL_RenderCopy(renderer, playerTexture, NULL, &player);
 
   // Render other elements
-  // SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Set color to red
-  // SDL_RenderFillRect(renderer, &player);            // Draw the player
+  // Player is not a one colour rectangle anymore
 
   SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255); // Set color to green
   SDL_RenderFillRect(renderer, &healthBar);         // Draw the health bar
