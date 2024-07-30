@@ -1,0 +1,27 @@
+FOR the player to have an image:
+
+void loadMedia() {
+    // Load player image
+    SDL_Surface *playerSurface = IMG_Load("player_image.png");
+    if (playerSurface == NULL) {
+        printf("Failed to load player image! SDL_image Error: %s\n", IMG_GetError());
+        return;
+    }
+    playerTexture = SDL_CreateTextureFromSurface(renderer, playerSurface);
+    SDL_FreeSurface(playerSurface);
+    if (playerTexture == NULL) {
+        printf("Failed to create texture from player surface! SDL Error: %s\n", SDL_GetError());
+    }
+
+    // Load background image
+    SDL_Surface *backgroundSurface = IMG_Load("background_image.png");
+    if (backgroundSurface == NULL) {
+        printf("Failed to load background image! SDL_image Error: %s\n", IMG_GetError());
+        return;
+    }
+    backgroundTexture = SDL_CreateTextureFromSurface(renderer, backgroundSurface);
+    SDL_FreeSurface(backgroundSurface);
+    if (backgroundTexture == NULL) {
+        printf("Failed to create texture from background surface! SDL Error: %s\n", SDL_GetError());
+    }
+}
