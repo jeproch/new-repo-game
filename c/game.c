@@ -14,7 +14,7 @@ SDL_Texture *playerTexture = NULL;
 void loadMedia() {
   // Load background image (replace with your actual image path)
   SDL_Surface *loadedSurface = IMG_Load("../assets/Unsaved Image 2.jpg");
-  SDL_Surface *playerSurface = IMG_Load("../assets/player.jpg");
+  SDL_Surface *playerSurface = IMG_Load("../assets/new-player.png");
 
   if (loadedSurface == NULL) {
     printf("Failed to load background image! SDL_image Error: %s\n",
