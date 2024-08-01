@@ -21,11 +21,11 @@ void quitGame() { quit = 1; }
 void move() { // SDL_KEYDOWN
   if (event.key.keysym.sym == SDLK_LEFT) {
     if (player.x > 0) {
-      player.x -= player.w;
+      player.x -= 10;
     }
   } else if (event.key.keysym.sym == SDLK_RIGHT) {
     if (player.x < 1366 - player.w) {
-      player.x += player.w;
+      player.x += 10;
     }
   } else if (event.key.keysym.sym == SDLK_F1) {
     quitGame();
