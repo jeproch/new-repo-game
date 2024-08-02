@@ -9,6 +9,7 @@ void render() {
 
   // Render background
   SDL_RenderCopy(renderer, backgroundTexture, NULL, NULL);
+  // render player
   SDL_RenderCopy(renderer, playerTexture, NULL, &player);
 
   // Render other elements

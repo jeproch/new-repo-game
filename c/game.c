@@ -10,6 +10,23 @@
 
 SDL_Texture *backgroundTexture = NULL;
 SDL_Texture *playerTexture = NULL;
+SDL_Texture *playerRightTexture = NULL;
+
+void showPlayerRight() {
+  SDL_Surface *playerSurfaceRight = IMG_Load("../assets/player-right.png");
+
+  if (playerSurfaceRight == NULL) {
+    printf("Failed to load playerSurfaceRight image! SDL_image Error: %s \n",
+           IMG_GetError());
+    return;
+  }
+
+  playerRightTexture =
+      SDL_CreateTextureFromSurface(renderer, playerSurfaceRight);
+
+  SDL_FreeSurface(playerSurfaceRight);
+  SDL_RenderCopy(renderer, playerRightTexture, NULL, &player);
+}
 
 void loadMedia() {
   // Load background image (replace with your actual image path)

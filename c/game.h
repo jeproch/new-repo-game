@@ -24,6 +24,7 @@ extern bool bShowInventory;
 
 // FUNCTIONS
 void loadMedia();
+void showPlayerRight();
 void move();
 void handleEvents();
 void render();
