@@ -4,13 +4,16 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_render.h>
 #include <SDL2/SDL_surface.h>
+#include <SDL2/SDL_timer.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <time.h>
 
 SDL_Texture *backgroundTexture = NULL;
 SDL_Texture *playerTexture = NULL;
+
 SDL_Texture *playerRightTexture = NULL;
+SDL_Texture *playerLeftTexture = NULL;
 
 void showPlayerRight() {
   SDL_Surface *playerSurfaceRight = IMG_Load("../assets/player-right.png");
@@ -28,17 +31,24 @@ void showPlayerRight() {
   SDL_RenderCopy(renderer, playerRightTexture, NULL, &player);
 }
 
-void loadMedia() {
-  // Load background image (replace with your actual image path)
+void showPlayerLeft() {
+  SDL_Surface *playerSurfaceLeft = IMG_Load("../assets/player-left.png");
 
-  SDL_Surface *loadedSurface = IMG_Load("../assets/Unsaved Image 2.jpg");
-  SDL_Surface *playerSurface = IMG_Load("../assets/new-player.png");
-
-  if (loadedSurface == NULL) {
-    printf("Failed to load background image! SDL_image Error: %s\n",
+  if (playerSurfaceLeft == NULL) {
+    printf("Failed to load playerSurfaceLeft image! SDL_image Error: %s \n",
            IMG_GetError());
     return;
   }
+
+  playerLeftTexture = SDL_CreateTextureFromSurface(renderer, playerSurfaceLeft);
+
+  SDL_FreeSurface(playerSurfaceLeft);
+  SDL_RenderCopy(renderer, playerLeftTexture, NULL, &player);
+}
+
+void showPlayer() {
+  // in order to not continously render both images together
+  SDL_Surface *playerSurface = IMG_Load("../assets/new-player.png");
 
   if (playerSurface == NULL) {
     printf("Failed to load player image! SDL_image ERROR: %s\n",
@@ -46,13 +56,27 @@ void loadMedia() {
     return;
   }
 
+  playerTexture = SDL_CreateTextureFromSurface(renderer, playerSurface);
+  SDL_FreeSurface(playerSurface);
+  SDL_RenderCopy(renderer, playerTexture, NULL, &player);
+}
+
+void loadMedia() {
+  // Load background image (replace with your actual image path)
+
+  SDL_Surface *loadedSurface = IMG_Load("../assets/Unsaved Image 2.jpg");
+
+  if (loadedSurface == NULL) {
+    printf("Failed to load background image! SDL_image Error: %s\n",
+           IMG_GetError());
+    return;
+  }
+
   // TEXTURES
   backgroundTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
-  playerTexture = SDL_CreateTextureFromSurface(renderer, playerSurface);
 
   // free the surfaces here
   SDL_FreeSurface(loadedSurface);
-  SDL_FreeSurface(playerSurface);
 }
 
 void handleEvents() {
@@ -65,5 +89,9 @@ void handleEvents() {
       }
     }
     toggleInventory(); //  Check for inventory toggle
+  }
+
+  if (quit != 1) {
+    showPlayer();
   }
 }

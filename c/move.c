@@ -25,6 +25,7 @@ void move() { // SDL_KEYDOWN
   if (event.key.keysym.sym == SDLK_LEFT) {
     if (player.x > 0) {
       player.x -= 15;
+      showPlayerLeft();
     }
   } else if (event.key.keysym.sym == SDLK_RIGHT) {
     if (player.x < 1366 - player.w) {
@@ -34,5 +35,6 @@ void move() { // SDL_KEYDOWN
   } else if (event.key.keysym.sym == SDLK_F1) {
     quitGame();
   }
+
   keepPlayerOnWindow();
 }
