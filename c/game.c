@@ -2,6 +2,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_mutex.h>
 #include <SDL2/SDL_render.h>
 #include <SDL2/SDL_surface.h>
 #include <SDL2/SDL_timer.h>
@@ -62,7 +63,6 @@ void showPlayer() {
 }
 
 void loadMedia() {
-  // Load background image (replace with your actual image path)
 
   SDL_Surface *loadedSurface = IMG_Load("../assets/Unsaved Image 2.jpg");
 
@@ -90,7 +90,7 @@ void handleEvents() {
     }
     toggleInventory(); //  Check for inventory toggle
   }
-
+  
   if (quit != 1) {
     showPlayer();
   }
