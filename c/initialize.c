@@ -29,6 +29,8 @@ int initializeSDL() {
     return 1;
   }
 
+  int lastFrameTime = SDL_GetTicks(); // outside game loop
+
   loadMedia();
 
   return 0;

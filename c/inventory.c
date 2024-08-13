@@ -11,8 +11,8 @@ bool bShowInventory = false;
 void toggleInventory() {
   if (event.key.keysym.sym == SDLK_i) {
     SDL_Delay(100);
-    bShowInventory = true;
+    bShowInventory = !bShowInventory;
   } else if (event.key.keysym.sym == SDLK_ESCAPE) {
-    bShowInventory = false;
+    bShowInventory = !bShowInventory;
   }
 }

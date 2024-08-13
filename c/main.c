@@ -25,6 +25,7 @@ void destroySDL() {
 
 int main() {
   initializeSDL();
+  int lastFrameTime = SDL_GetTicks(); // outside game loop
 
   while (!quit) {
     // Render background

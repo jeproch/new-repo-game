@@ -1,27 +1,113 @@
-FOR the player to have an image:
+#include <SDL.h>
+#include <SDL_image.h>
+#include <stdio.h>
 
-void loadMedia() {
-    // Load player image
-    SDL_Surface *playerSurface = IMG_Load("player_image.png");
-    if (playerSurface == NULL) {
-        printf("Failed to load player image! SDL_image Error: %s\n", IMG_GetError());
-        return;
-    }
-    playerTexture = SDL_CreateTextureFromSurface(renderer, playerSurface);
-    SDL_FreeSurface(playerSurface);
-    if (playerTexture == NULL) {
-        printf("Failed to create texture from player surface! SDL Error: %s\n", SDL_GetError());
-    }
+SDL_Texture* playerLeftTextures[NUM_FRAMES];
+SDL_Texture* playerRightTextures[NUM_FRAMES];
+SDL_Renderer* renderer; // Assume this is initialized elsewhere
+SDL_Rect player; // Assume this is initialized elsewhere
 
-    // Load background image
-    SDL_Surface *backgroundSurface = IMG_Load("background_image.png");
-    if (backgroundSurface == NULL) {
-        printf("Failed to load background image! SDL_image Error: %s\n", IMG_GetError());
-        return;
-    }
-    backgroundTexture = SDL_CreateTextureFromSurface(renderer, backgroundSurface);
-    SDL_FreeSurface(backgroundSurface);
-    if (backgroundTexture == NULL) {
-        printf("Failed to create texture from background surface! SDL Error: %s\n", SDL_GetError());
+void loadPlayerTextures() {
+    SDL_Surface* tempSurface;
+    char filename[256];
+    
+    for (int i = 0; i < NUM_FRAMES; ++i) {
+        snprintf(filename, sizeof(filename), "../assets/player-left-%d.png", i);
+        tempSurface = IMG_Load(filename);
+        if (tempSurface) {
+            playerLeftTextures[i] = SDL_CreateTextureFromSurface(renderer, tempSurface);
+            SDL_FreeSurface(tempSurface);
+        } else {
+            printf("Failed to load %s! SDL_image Error: %s\n", filename, IMG_GetError());
+        }
+
+        snprintf(filename, sizeof(filename), "../assets/player-right-%d.png", i);
+        tempSurface = IMG_Load(filename);
+        if (tempSurface) {
+            playerRightTextures[i] = SDL_CreateTextureFromSurface(renderer, tempSurface);
+            SDL_FreeSurface(tempSurface);
+        } else {
+            printf("Failed to load %s! SDL_image Error: %s\n", filename, IMG_GetError());
+        }
     }
 }
+
+******
+
+STEP 2
+
+******
+
+Uint32 lastUpdateTime = 0;
+const Uint32 ANIMATION_SPEED = 100; // milliseconds per frame
+int currentFrame = 0;
+int numFrames = NUM_FRAMES;
+int movingRight = 1; // 1 for right, 0 for left
+
+void updatePlayerAnimation() {
+    Uint32 currentTime = SDL_GetTicks();
+    if (currentTime - lastUpdateTime > ANIMATION_SPEED) {
+        lastUpdateTime = currentTime;
+        currentFrame = (currentFrame + 1) % numFrames;
+    }
+}
+
+******
+
+STEP 3
+
+******
+
+void renderPlayer() {
+    SDL_Texture* currentTexture = movingRight ? playerRightTextures[currentFrame] : playerLeftTextures[currentFrame];
+    SDL_RenderCopy(renderer, currentTexture, NULL, &player);
+}
+
+******
+
+STEP 4 //pulling it all together
+
+******
+
+#include <SDL.h>
+#include <SDL_image.h>
+#include <stdio.h>
+
+#define NUM_FRAMES 4
+
+SDL_Texture* playerLeftTextures[NUM_FRAMES];
+SDL_Texture* playerRightTextures[NUM_FRAMES];
+SDL_Renderer* renderer; // Assume this is initialized elsewhere
+SDL_Rect player; // Assume this is initialized elsewhere
+
+void loadPlayerTextures();
+void updatePlayerAnimation();
+void renderPlayer();
+
+int main(int argc, char* argv[]) {
+    // Initialize SDL, create renderer, etc.
+    
+    loadPlayerTextures();
+    
+    Uint32 lastFrameTime = SDL_GetTicks();
+    int running = 1;
+    while (running) {
+        // Handle events, input, etc.
+        
+        Uint32 currentFrameTime = SDL_GetTicks();
+        if (currentFrameTime - lastFrameTime > 16) { // Roughly 60 FPS
+            lastFrameTime = currentFrameTime;
+            
+            updatePlayerAnimation();
+            SDL_RenderClear(renderer);
+            renderPlayer();
+            SDL_RenderPresent(renderer);
+        }
+        
+        // Check for exit conditions
+    }
+    
+    // Clean up and quit SDL
+    return 0;
+}
+

@@ -4,9 +4,11 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mutex.h>
 #include <SDL2/SDL_render.h>
+#include <SDL2/SDL_stdinc.h>
 #include <SDL2/SDL_surface.h>
 #include <SDL2/SDL_timer.h>
 #include <stdbool.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <time.h>
 
@@ -79,6 +81,20 @@ void loadMedia() {
   SDL_FreeSurface(loadedSurface);
 }
 
+void determineFrameTime() {
+  // int currentFrameTime = SDL_GetTicks();
+
+  // if (lastFrameTime == 0) {
+  //   lastFrameTime = SDL_GetTicks();
+  // }
+
+  // if (currentFrameTime - lastFrameTime > 16) { // roughly 60 fps
+  //   lastFrameTime = currentFrameTime;
+  // }
+  lastFrameTime = 0; //why does this read as read only?
+  printf("%d \n", lastFrameTime);
+}
+
 void handleEvents() {
   while (SDL_PollEvent(&event)) {
     if (event.type == SDL_QUIT) {
@@ -89,8 +105,9 @@ void handleEvents() {
       }
     }
     toggleInventory(); //  Check for inventory toggle
+    determineFrameTime();
   }
-  
+
   if (quit != 1) {
     showPlayer();
   }
