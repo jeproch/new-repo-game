@@ -20,8 +20,9 @@ extern SDL_Rect newRectangle; // the food or just enemies {Items??}
 extern SDL_Texture *backgroundTexture;
 extern SDL_Texture *playerTexture;
 extern int quit;
-extern int lastFrameTime;
 extern bool bShowInventory;
+extern bool showRight;
+extern bool showLeft;
 
 // FUNCTIONS
 void loadMedia();

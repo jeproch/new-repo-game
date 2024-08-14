@@ -18,6 +18,10 @@ SDL_Texture *playerTexture = NULL;
 SDL_Texture *playerRightTexture = NULL;
 SDL_Texture *playerLeftTexture = NULL;
 
+bool showLeft = false;
+bool showRight = false; // temporarily use these to show the animation for
+// roughly 500 milliseconds
+
 void showPlayerRight() {
   SDL_Surface *playerSurfaceRight = IMG_Load("../assets/player-right.png");
 
@@ -81,20 +85,6 @@ void loadMedia() {
   SDL_FreeSurface(loadedSurface);
 }
 
-void determineFrameTime() {
-  // int currentFrameTime = SDL_GetTicks();
-
-  // if (lastFrameTime == 0) {
-  //   lastFrameTime = SDL_GetTicks();
-  // }
-
-  // if (currentFrameTime - lastFrameTime > 16) { // roughly 60 fps
-  //   lastFrameTime = currentFrameTime;
-  // }
-  lastFrameTime = 0; //why does this read as read only?
-  printf("%d \n", lastFrameTime);
-}
-
 void handleEvents() {
   while (SDL_PollEvent(&event)) {
     if (event.type == SDL_QUIT) {
@@ -105,7 +95,6 @@ void handleEvents() {
       }
     }
     toggleInventory(); //  Check for inventory toggle
-    determineFrameTime();
   }
 
   if (quit != 1) {
